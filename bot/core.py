@@ -57,10 +57,10 @@ class TelegramBot:
     def get_message_text(self, update):
         return update["message"]["text"]
 
-    # Звернути увагу, тут раніше був POST
     def send_message(self, chat_id, text):
-        url = self.url + f"sendMessage?chat_id={chat_id}&text={text}"
-        requests.get(url)
+        url = self.url + "sendMessage"
+        payload = {"chat_id": chat_id, "text": text}
+        requests.post(url, json=payload)
 
     def run(self):
         update = self.get_last_update()

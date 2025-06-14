@@ -1,4 +1,6 @@
 import functools
+from dotenv import load_dotenv
+import os
 
 # Decorator pattern: логування всіх команд
 def log_command(func):
@@ -13,8 +15,10 @@ def log_command(func):
 def require_auth(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
+        load_dotenv()
+        admin_id = os.getenv("ADMIN_ID")
         user_id = args[3]
-        if user_id == 1:  # admin (умовно)
+        if user_id == admin_id:
             return func(*args, **kwargs)
         return "Unauthorized"
     return wrapper
