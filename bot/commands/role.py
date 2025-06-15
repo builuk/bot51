@@ -62,6 +62,29 @@ class RoleRemoveFromStrategy(RoleStrategy):
         users_dict[role].remove(uid)
         return f"ID {uid} видалено з ролі '{role}'."
 
+class RoleShowStrategy(RoleStrategy):
+    def execute(self, parts):
+        # /role show users
+        if len(parts) == 3 and parts[1] == "show" and parts[2] == "users":
+            if not users_dict:
+                return "Жодної ролі не знайдено."
+            res = ["Користувачі за ролями:"]
+            for role, users in users_dict.items():
+                users_list = ", \n".join(str(u) for u in users) if users else "немає"
+                res.append(f"  {role}: {users_list}")
+            return "\n".join(res)
+
+        # /role show commands
+        if len(parts) == 3 and parts[1] == "show" and parts[2] == "commands":
+            if not commands_dict:
+                return "Жодної команди не знайдено."
+            res = ["Команди та ролі:"]
+            for cmd, roles in commands_dict.items():
+                roles_list = ", \n".join(roles) if roles else "немає ролей"
+                res.append(f"  {cmd}: {roles_list}")
+            return "\n".join(res)
+        return "Невідома команда show. Доступно: users, commands."
+
 class RoleCommand(BotCommand):
     def __init__(self):
         self.strategies = {
@@ -69,7 +92,8 @@ class RoleCommand(BotCommand):
             "add": RoleAddStrategy(),
             "remove": RoleRemoveStrategy(),
             "add_to": RoleAddToStrategy(),
-            "remove_from": RoleRemoveFromStrategy()
+            "remove_from": RoleRemoveFromStrategy(),
+            "show": RoleShowStrategy()
         }
 
     def execute(self, text, chat_id, user_id, **kwargs):
@@ -94,5 +118,9 @@ class RoleCommand(BotCommand):
         # /role remove from <role> <id>
         if parts[1] == "remove" and parts[2] == "from" and len(parts) == 5:
             return self.strategies["remove_from"].execute(parts)
+
+        # /role show users
+        if parts[1] == "show" and len(parts) == 3:
+            return self.strategies["show"].execute(parts)
 
         return "Невірний синтаксис. Дивись інструкцію."
