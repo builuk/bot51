@@ -9,7 +9,7 @@ class HelpMenuStrategy(CommandStrategy):
         commands_dir = os.path.dirname(__file__)
         command_names = []
         for file in os.listdir(commands_dir):
-            if file.endswith(".py") and file not in ("__init__.py", "help_menu.py"):
+            if file.endswith(".py") and file not in ("__init__.py", "help_menu.py", "role.py"):
                 command_names.append(f"/{file[:-3]}")
         command_names.append("/help")
         return f"This is help menu. Available commands: {', '.join(sorted(command_names))}"
