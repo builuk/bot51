@@ -2,7 +2,7 @@ import os
 import requests
 import time
 from bot.factories import CommandFactory
-from bot.decorators import log_command
+from bot.decorators import log_command, require_auth
 from bot.handlers import Handler, CensorshipHandler, LoggingHandler
 
 
@@ -28,6 +28,7 @@ class TelegramBot:
         return censorship
 
     @log_command
+    @require_auth
     def handle_message(self, text, chat_id, user_id):
         # Chain of Responsibility: запускаємо ланцюг
         result = self.handler_chain.handle(text, chat_id, user_id)
