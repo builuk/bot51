@@ -1,5 +1,7 @@
 from bot.base import BotCommand, CommandStrategy
 
+info = "Check temperature"
+
 class TemperatureStrategy(CommandStrategy):
     def handle(self, text, chat_id, user_id):
         # Просто заглушка

@@ -20,13 +20,13 @@ def require_auth(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         load_dotenv()
-        admin_id = os.getenv("ADMIN_ID")
+        admin_id = int(os.getenv("ADMIN_ID"))
         command = args[1]
-        user_id = args[3]
-        if int(user_id) == int(admin_id):
+        user_id = int(args[3])
+        if user_id == admin_id:
             return func(*args, **kwargs)
         # Тут відбувається перевірка. Якщо команда не додана в список пускає далі
-        access = check_command_access(command, int(user_id))
+        access = check_command_access(command, user_id)
         if access is True:
             return func(*args, **kwargs)
         else:

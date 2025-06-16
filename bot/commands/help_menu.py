@@ -12,7 +12,10 @@ class HelpMenuStrategy(CommandStrategy):
             if file.endswith(".py") and file not in ("__init__.py", "help_menu.py", "role.py"):
                 command_names.append(f"/{file[:-3]}")
         command_names.append("/help")
-        return f"This is help menu. Available commands: {', '.join(sorted(command_names))}"
+
+
+
+        return f"This is help menu. Available commands:\n {'\n'.join(sorted(command_names))}"
 
 class HelpMenuCommand(BotCommand):
     def __init__(self):
