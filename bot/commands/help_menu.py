@@ -3,19 +3,29 @@ import importlib
 import inspect
 from bot.base import BotCommand, CommandStrategy
 
+
 class HelpMenuStrategy(CommandStrategy):
     def handle(self, text, chat_id, user_id):
         # Генеруємо команди прямо тут
         commands_dir = os.path.dirname(__file__)
-        command_names = []
+        command_infos = {}
         for file in os.listdir(commands_dir):
             if file.endswith(".py") and file not in ("__init__.py", "help_menu.py", "role.py"):
-                command_names.append(f"/{file[:-3]}")
-        command_names.append("/help")
+                module_name = f"bot.commands.{file[:-3]}"
+                module = importlib.import_module(module_name)
+                for name, obj in inspect.getmembers(module):
+                    if inspect.isclass(obj) and issubclass(obj, BotCommand) and obj is not BotCommand:
+                        info = getattr(obj, "info", "No description")
+                        command_infos[f"/{file[:-3]}"] = info
+                        break
+        command_infos["/help"] = "Show this help menu"
 
+        help_text = "This is help menu. Available commands:\n"
+        for cmd, info in sorted(command_infos.items()):
+            help_text += f"{cmd} - {info}\n"
 
+        return help_text
 
-        return f"This is help menu. Available commands:\n {'\n'.join(sorted(command_names))}"
 
 class HelpMenuCommand(BotCommand):
     def __init__(self):

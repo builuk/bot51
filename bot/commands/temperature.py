@@ -1,13 +1,17 @@
 from bot.base import BotCommand, CommandStrategy
-
-info = "Check temperature"
+from bot.helper.temperature_helper import TemperatureHelper
 
 class TemperatureStrategy(CommandStrategy):
     def handle(self, text, chat_id, user_id):
-        # Просто заглушка
-        return "25 degree celsius"
+        weather = TemperatureHelper()
+        weather.run(q='Odesa', units='metric')
+        temperature = weather.temperature()
+        return temperature
+
 
 class TemperatureCommand(BotCommand):
+    info = "Check the current temperature"
+
     def __init__(self):
         self.strategy = TemperatureStrategy()
 
