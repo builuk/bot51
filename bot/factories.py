@@ -1,10 +1,10 @@
 from bot.commands.help_menu import HelpMenuCommand
-from bot.commands.dice import DiceCommand
-from bot.commands.notebook import NotebookCommand
-from bot.commands.currency import CurrencyCommand
-from bot.commands.iam import IAmCommand
-from bot.commands.temperature import TemperatureCommand
-from bot.commands.some import SomeCommand
+from bot.commands.command_dice import DiceCommand
+from bot.commands.command_notebook import NotebookCommand
+from bot.commands.command_currency import CurrencyCommand
+from bot.commands.command_iam import IAmCommand
+from bot.commands.command_temperature import TemperatureCommand
+from bot.commands.command_some import SomeCommand
 from bot.commands import COMMAND_CLASSES
 
 

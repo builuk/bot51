@@ -20,7 +20,7 @@ class BotCommand(ABC):
     def execute(self, text, chat_id, user_id):
         pass
 
-# commands/dice.py
+# commands/command_dice.py
 class DiceCommand(BotCommand):
     def __init__(self):
         self.strategy = DiceStrategy()
@@ -49,7 +49,7 @@ class CommandStrategy(ABC):
     def handle(self, text, chat_id, user_id):
         pass
 
-# commands/dice.py
+# commands/command_dice.py
 class DiceStrategy(CommandStrategy):
     def handle(self, text, chat_id, user_id):
         return f"🎲 You rolled: {random.randint(1, 6)}"

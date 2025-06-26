@@ -4,31 +4,49 @@ from dotenv import load_dotenv
 
 
 class TemperatureHelper:
-    def __init__(self):
+    def __init__(self, units='metric'):
+        """
+        Ініціалізуємо допоміжний клас для отримання температури.
+
+        :param units: Система одиниць вимірювання: 'metric', 'imperial' або 'standard'
+        """
         load_dotenv()
         self.weather_api_key = os.getenv("WEATHER_API_KEY")
         self.weather_url = os.getenv("WEATHER_URL")
-        self.result = ''
-        self.data = ''
+        self.units = units
+        self.data = {}
 
-    def run(self, **params):
+    def fetch_weather(self, city, **params):
+        """
+        Виконуємо запит погоди для конкретного міста.
+
+        :param city: Назва міста
+        :param params: Додаткові параметри для API
+        """
+        params['q'] = city
         params['appid'] = self.weather_api_key
+        params.setdefault('units', self.units)
         response = requests.get(self.weather_url, params=params)
+        response.raise_for_status()
         self.data = response.json()
 
-    def temperature(self):
-        return f"Температура: {self.data['main']['temp']} °C"
+    def get_temperature(self):
+        """
+        Повертає температуру у заданій системі одиниць.
+        """
+        temp = self.data.get('main', {}).get('temp')
+        if temp is not None:
+            unit_label = self._get_unit_label()
+            return f"Температура: {temp} {unit_label}"
+        return "Дані про температуру відсутні."
 
-
-# load_dotenv()
-# city = 'Kyiv'
-# weather_api_key = os.getenv("WEATHER_API_KEY")
-# weather_url = os.getenv("WEATHER_URL")
-# params = {
-#     'q': city,
-#     'appid': weather_api_key,
-#     'units': 'metric'
-# }
-# response = requests.get(weather_url, params=params)
-# data = response.json()
-# temperature = f"Температура: {data['main']['temp']} °C"
+    def _get_unit_label(self):
+        """
+        Визначає позначення одиниць для температури.
+        """
+        if self.units == 'imperial':
+            return '°F'
+        elif self.units == 'standard':
+            return 'K'
+        else:
+            return '°C'

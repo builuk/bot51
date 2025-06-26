@@ -10,13 +10,13 @@ class HelpMenuStrategy(CommandStrategy):
         commands_dir = os.path.dirname(__file__)
         command_infos = {}
         for file in os.listdir(commands_dir):
-            if file.endswith(".py") and file not in ("__init__.py", "help_menu.py", "role.py"):
+            if file.startswith("command_") and file.endswith(".py"):
                 module_name = f"bot.commands.{file[:-3]}"
                 module = importlib.import_module(module_name)
                 for name, obj in inspect.getmembers(module):
                     if inspect.isclass(obj) and issubclass(obj, BotCommand) and obj is not BotCommand:
                         info = getattr(obj, "info", "No description")
-                        command_infos[f"/{file[:-3]}"] = info
+                        command_infos[f"/{file[8:-3]}"] = info
                         break
         command_infos["/help"] = "Show this help menu"
 

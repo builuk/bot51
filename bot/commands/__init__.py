@@ -12,7 +12,11 @@ def load_command_classes():
             module = importlib.import_module(f".{module_name}", package=__name__)
             for name, obj in inspect.getmembers(module):
                 if inspect.isclass(obj) and issubclass(obj, BotCommand) and obj is not BotCommand:
-                    command_classes[f"/{module_name}"] = obj
+                    if module_name.startswith("command_"):
+                        command = module_name.removeprefix("command_")
+                    else:
+                        command = module_name
+                    command_classes[f"/{command}"] = obj
                     break
     return command_classes
 
