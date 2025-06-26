@@ -46,7 +46,6 @@ jobs:
             python main.py
           no_output_timeout: 15m
 
-
 workflows:
   version: 2
   build_and_test:
