@@ -35,7 +35,6 @@ jobs:
             echo "TOKEN=${TOKEN}" > .env
             echo "ADMIN_ID=${ADMIN_ID}" >> .env
             echo "WEATHER_API_KEY=${WEATHER_API_KEY}" > .env
-            echo "WEATHER_URL=${WEATHER_URL}" >> .env
           when: always
       - run:
           name: Setup Environment and Run Bot
