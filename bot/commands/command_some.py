@@ -1,9 +1,21 @@
+import requests
 from bot.base import BotCommand, CommandStrategy
 
 class SomeStrategy(CommandStrategy):
     def handle(self, text, chat_id, user_id):
-        # Просто заглушка
-        return "25 degree celsius"
+        try:
+            url = f"https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT"
+            resp = requests.get(url, timeout=5)
+            resp.raise_for_status()
+            data = resp.json()
+            if data and isinstance(data, dict):
+                result = f"Currency: {data['symbol']} Amount: {data['price']}"
+                return result
+            # Якщо порожній словник або не словник
+            return None
+        except Exception as e:
+            return None
+
 
 class SomeCommand(BotCommand):
     def __init__(self):
