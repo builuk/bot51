@@ -5,6 +5,7 @@ from bot.commands.command_currency import CurrencyCommand
 from bot.commands.command_iam import IAmCommand
 from bot.commands.command_temperature import TemperatureCommand
 from bot.commands.command_some import SomeCommand
+from bot.commands.shutdown import ShutdownCommand
 from bot.commands import COMMAND_CLASSES
 
 
@@ -12,6 +13,7 @@ from bot.commands import COMMAND_CLASSES
 # Factory pattern: фабрика для створення команд за ключовим словом
 class CommandFactory:
     commands_map = COMMAND_CLASSES.copy()
+    commands_map["/shutdown"] = ShutdownCommand
     commands_map["/help"] = HelpMenuCommand
 
     @staticmethod

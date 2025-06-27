@@ -77,6 +77,13 @@ class TelegramBot:
                 user_id = self.get_user_id(update)
                 message_text = self.get_message_text(update)
                 reply = self.handle_message(message_text, chat_id, user_id)
-                self.send_message(chat_id, reply)
+                if reply == "__SHUTDOWN__":
+                    self.send_message(chat_id, "Бот вимикається…")
+                    import sys
+                    sys.exit(0)
+                else:
+                    self.send_message(chat_id, reply)
+
+                # self.send_message(chat_id, reply)
                 self.last_update_id = update["update_id"]
 

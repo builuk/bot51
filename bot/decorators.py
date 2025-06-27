@@ -15,7 +15,7 @@ def log_command(func):
     return wrapper
 
 
-# Decorator pattern: перевірка авторизації (демо)
+# Decorator pattern: перевірка авторизації
 def require_auth(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
