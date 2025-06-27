@@ -16,7 +16,7 @@ class SomeStrategy(CommandStrategy):
             print(2)
             return None
         except Exception as e:
-            print(3)
+            print(3,e.message)
             return None
 
 
