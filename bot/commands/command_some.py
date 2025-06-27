@@ -10,10 +10,13 @@ class SomeStrategy(CommandStrategy):
             data = resp.json()
             if data and isinstance(data, dict):
                 result = f"Currency: {data['symbol']} Amount: {data['price']}"
+                print(result,1)
                 return result
             # Якщо порожній словник або не словник
+            print(2)
             return None
         except Exception as e:
+            print(3)
             return None
 
 
