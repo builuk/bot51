@@ -22,3 +22,5 @@ class CommandFactory:
         if CommandClass:
             return CommandClass()
         return None
+
+
