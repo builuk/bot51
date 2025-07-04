@@ -23,3 +23,4 @@ class CommandFactory:
             return CommandClass()
         return None
 
+
