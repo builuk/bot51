@@ -8,6 +8,7 @@ from bot.commands.command_some import SomeCommand
 from bot.commands.shutdown import ShutdownCommand
 from bot.commands import COMMAND_CLASSES
 from bot.commands.command_dev import DevCommand
+from bot.commands.command_answer import AnswerCommand
 
 
 
@@ -24,5 +25,3 @@ class CommandFactory:
         if CommandClass:
             return CommandClass()
         return None
-
-

@@ -86,4 +86,3 @@ class TelegramBot:
 
                 # self.send_message(chat_id, reply)
                 self.last_update_id = update["update_id"]
-
