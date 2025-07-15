@@ -2,7 +2,7 @@ from bot.base import BotCommand, CommandStrategy
 import os
 from dotenv import load_dotenv
 
-class IAmStrategy(CommandStrategy):
+class AnswerStrategy(CommandStrategy):
     def handle(self, text, chat_id, user_id):
         load_dotenv()
         api_key = os.getenv("OPENAI_API_KEY")
@@ -26,9 +26,9 @@ class IAmStrategy(CommandStrategy):
 
         return response.choices[0].message.content
 
-class IAmCommand(BotCommand):
+class AnswerCommand(BotCommand):
     def __init__(self):
-        self.strategy = IAmStrategy()
+        self.strategy = AnswerStrategy()
 
     def execute(self, text, chat_id, user_id):
         return self.strategy.handle(text, chat_id, user_id)
