@@ -40,6 +40,18 @@ class TemperatureHelper:
             return f"Температура: {temp} {unit_label}"
         return "Дані про температуру відсутні."
 
+    def get_weather(self):
+        """
+        Повертає погоду і вологість.
+        """
+        humidity = self.data.get('main', {}).get('humidity')
+        weather = self.data.get('weather', [{}])[0].get('main')
+        if humidity is not None and weather is not None:
+            unit_label = self._get_unit_label()
+            return (f"Вологість: {humidity} \n"
+                    f"Погода: {weather} ")
+        return "Дані про вологість відсутні."
+
     def _get_unit_label(self):
         """
         Визначає позначення одиниць для температури.

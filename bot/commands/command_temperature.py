@@ -4,9 +4,13 @@ from bot.helper.temperature_helper import TemperatureHelper
 
 class TemperatureStrategy(CommandStrategy):
     def handle(self, text, chat_id, user_id):
-        # Видаляємо команду `/temperature` і пробіли
-        if text.startswith('/temperature'):
-            text = text[len('/temperature'):].strip()
+
+        if text.startswith('/temperature full'):
+            command = '/temperature full'
+            text = text.replace('/temperature full', '')
+        else:
+            command = '/temperature'
+            text = text.replace('/temperature', '')
 
         # Значення за замовчуванням
         city = 'Odesa'
@@ -21,7 +25,11 @@ class TemperatureStrategy(CommandStrategy):
 
         weather = TemperatureHelper(units=units)
         weather.fetch_weather(city)
-        return f"{city}: {weather.get_temperature()}"
+        if command == '/temperature full':
+            result = f"{city}: {weather.get_weather()}"
+        else:
+            result = f"{city}: {weather.get_temperature()}"
+        return result
 
 
 class TemperatureCommand(BotCommand):
