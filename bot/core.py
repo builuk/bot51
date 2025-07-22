@@ -50,13 +50,22 @@ class TelegramBot:
         return None
 
     def get_chat_id(self, update):
-        return update["message"]["chat"]["id"]
+        if 'message' in update:
+            return update["message"]["chat"]["id"]
+        else:
+            return update["edited_message"]["chat"]["id"]
 
     def get_user_id(self, update):
-        return update["message"]["from"]["id"]
+        if 'message' in update:
+            return update["message"]["from"]["id"]
+        else:
+            return update["edited_message"]["from"]["id"]
 
     def get_message_text(self, update):
-        return update["message"]["text"]
+        if 'message' in update:
+            return update["message"]["text"]
+        else:
+            return update["edited_message"]["text"]
 
     def send_message(self, chat_id, text):
         url = self.url + "sendMessage"
