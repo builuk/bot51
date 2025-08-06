@@ -9,6 +9,14 @@ from bot.commands.shutdown import ShutdownCommand
 from bot.commands import COMMAND_CLASSES
 from bot.commands.command_dev import DevCommand
 from bot.commands.command_answer import AnswerCommand
+from bot.commands.weather import WeatherCommand
+
+class CommandFactory:
+    @staticmethod
+    def create_command(command_name):
+        if command_name == "/weather":
+            return WeatherCommand()
+        # інші команди...
 
 
 

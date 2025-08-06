@@ -14,6 +14,7 @@ def main():
     # print(bot.handle_message("/notebook list", 100, 2))
     # print(bot.handle_message("/currency", 100, 1))
     # print(bot.handle_message("hello badword", 100, 2))  # буде заблоковано
+    print(bot.handle_message("/weather", 123, 1111))
 
     bot.run()
 
